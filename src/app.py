@@ -8,6 +8,8 @@ def create_app():
 
     # register blueprint
     from src.main import main_bp
+    from src.auth import auth_bp
     app.register_blueprint(main_bp, url_prefix='/')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
     return app
