@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash, url_for
-from flask_login import logout_user, login_user
+from flask_login import logout_user, login_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import auth_bp
 from src.models.user import User
@@ -9,11 +9,29 @@ from src.data.csu_campuses import CSU_CAMPUSES
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        # check form 
-        pass
+        email = request.form['email']
+        password = request.form['password']
+        coll = get_user_collection()
 
+        doc = coll.find_one({'email': email})
+
+        # if email found, check password
+        if doc: 
+            if check_password_hash(doc['password'], password):
+                user = User(doc)
+                login_user(user, remember=True)
+                flash(f'User found. Logging in!', category='success')
+                return render_template(url_for('main.index'))
+            else:
+                flash('Wrong password', category='error')
+                return redirect(url_for('auth.login'))
+        else:
+            flash('User not found!', category='error')
+            return redirect(url_for('auth.login'))
+        
     return render_template('login.html')
 
+@login_required
 @auth_bp.route('/logout', methods=['GET'])
 def logout():
     logout_user()

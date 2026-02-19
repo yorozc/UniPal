@@ -2,8 +2,12 @@
 
 {% block body %}
 <main>
-    <form>
-        
+    <form method="POST" action="{{url_for('auth.login')}}">
+        <label for="email">Email</label>
+        <input type="email" name="email" required/>
+        <label for="password">Password</label>
+        <input type="password" name="password" required/>
+        <button type="submit">submit</button>
     </form>
 </main>
 {% endblock %}
