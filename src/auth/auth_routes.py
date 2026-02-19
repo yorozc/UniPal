@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template, redirect, flash, url_for
+from flask_login import logout_user, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import auth_bp
-from database.db import get_user_collection
+from src.database.db import get_user_collection
 from src.data.csu_campuses import CSU_CAMPUSES
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -12,6 +13,12 @@ def login():
 
     return render_template('login.html')
 
+@auth_bp.route('/logout', methods=['GET'])
+def logout():
+    logout_user()
+    flash('Successfully logged out!', category='success')
+    return redirect(url_for('main.index'))
+
 # create account
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -21,23 +28,34 @@ def signup():
         last_name = request.form['last_name']
         email = request.form['email']
         password = request.form['password']
-        major = request.form['major']
         college = request.form['college']
+        coll = get_user_collection()
 
         user = {
             'first_name': first_name, 
             'last_name': last_name, 
             'email': email,
             'password': generate_password_hash(password, method='scrypt'),
-            'major': major,
             'college': college
         }
         
-        coll = get_user_collection()
-        
-        # search for existing email
-        # if email is found show that it already exists
-        # if not found, add to db
+        doc = coll.find_one({"email": email})
+
+        if doc: # email found in database
+            flash('Email already exists!', category='error')
+            return redirect(url_for('auth.login'))
+        else: # email not found in db
+            try:
+                coll.insert_one(user)
+                doc = coll.find_one({'email': email})
+                flash('User created!', category='success')
+                user = User(doc)
+                login_user(user, remember=True)
+                return redirect(url_for('main.index'))
+            
+            except Exception as e:
+                pass
+
         return redirect(url_for('main.index'))
 
     return render_template('signup.html', csu_campuses=CSU_CAMPUSES)
