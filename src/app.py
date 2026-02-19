@@ -1,10 +1,12 @@
 from flask import Flask, Blueprint
+import os
 
 
 app = Flask(__name__)
 
 def create_app():
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
     # register blueprint
     from src.main import main_bp
