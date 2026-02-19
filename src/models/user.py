@@ -22,5 +22,5 @@ class User(UserMixin):
         return self.doc.get("email")
     
     @property 
-    def first_name(self):
-        return str(self.doc.get("first_name"))
+    def name(self):
+        return str(self.doc.get("first_name")) + " " + str(self.doc.get("last_name"))

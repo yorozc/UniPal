@@ -16,6 +16,9 @@ def add_post():
         time = request.form['time']
         pals = request.form['amount']
         user_id = ObjectId(current_user.id)
+        curr_email = current_user.email
+        curr_name = current_user.name
+        
         coll = get_unipal_posts()
 
         date_obj = datetime.strptime(date, "%Y-%m-%d")
@@ -24,6 +27,8 @@ def add_post():
         formatted_time = time_obj.strftime("%I:%M %p")
 
         post = {
+            "curr_name": curr_name,
+            "curr_email": curr_email,
             "assignment": assn_name,
             "description": desc,
             "class": class_name,
