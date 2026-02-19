@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<main>
+    <form method="POST" action="{{url_for('pal.add_post')}}">
+        <label for="work_name">Assignment Name</label>
+        <input type="text" name=work_name required/>
+        <label for="description">Description</label>
+        <textarea name="description" rows="5" cols="25"></textarea>
+        <label for="class">Class</label>
+        <input type="text" name="class" placeholder="e.g CS3000" required/>
+        <label for="date">Start Date</label>
+        <input type="date" name="date" required/>
+        <label for="time">Start Time</label>
+        <input type="time" name="time" required/>
+        <label for="amount">Pals</label>
+        <input type="number" name="amount" min=1 required/>
+        <button type="submit">Submit</button>
+    </form>
+</main>
+{% endblock %}
