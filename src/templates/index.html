@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
 
-<a href="/login"></a>
-<a href="/signin"></a>
+{% block body %}
+<a href="/login">login</a>
+<a href="/signin">signup</a>
+{% for post in posts %}
+    <p>Posts: {{ post.author }} {{post.content}}</p>
+{% endfor %}
+{% endblock %}

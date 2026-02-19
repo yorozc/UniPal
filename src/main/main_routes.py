@@ -1,7 +1,10 @@
 from flask import Flask, redirect, url_for, render_template
 from . import main_bp # blueprint
+from src.db.db import get_unipal_posts
 
 
 @main_bp.route('/')
 def index():
-    return render_template('index.html')
+    coll = get_unipal_posts()
+    
+    return render_template('index.html', posts=coll.find({}))
