@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
 from . import auth_bp
+from database.db import get_user_collection
 from src.data.csu_campuses import CSU_CAMPUSES
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -21,8 +23,18 @@ def signup():
         password = request.form['password']
         major = request.form['major']
         college = request.form['college']
+
+        user = {
+            'first_name': first_name, 
+            'last_name': last_name, 
+            'email': email,
+            'password': generate_password_hash(password, method='scrypt'),
+            'major': major,
+            'college': college
+        }
         
-        # get users collection
+        coll = get_user_collection()
+        
         # search for existing email
         # if email is found show that it already exists
         # if not found, add to db
