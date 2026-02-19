@@ -1,10 +1,17 @@
-from flask import Flask
+from flask import Flask, request, render_template, redirect, flash
 from . import auth_bp
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    return 'login'
+    if request.method == "POST":
+        pass
 
+    render_template('login.html')
+
+# create account
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return 'signup'
+    if request.method == "POST":
+        pass
+
+    render_template('signup.html')
