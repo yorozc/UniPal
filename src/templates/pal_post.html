@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <a href="{{ url_for('main.index') }}">Home</a>
+    <div class="post">
+        {{post.name}}
+        {{post.email}}
+        {{post.assignment}}
+        {{post.description}}
+        {{post.class}}
+    </div>
+{% endblock %}

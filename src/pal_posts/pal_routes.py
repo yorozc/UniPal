@@ -5,6 +5,12 @@ from . import pal_bp
 from src.database.db import get_unipal_posts
 from datetime import datetime
 
+@pal_bp.route("/post/<post_id>", methods=['GET'])
+def post(post_id):
+    coll = get_unipal_posts()
+    post = coll.find_one({"_id": ObjectId(post_id)})
+    return render_template('pal_post.html', post=post)
+
 # creating a pal post
 @pal_bp.route('/add_post', methods=['GET', 'POST'])
 def add_post():
@@ -27,8 +33,9 @@ def add_post():
         formatted_time = time_obj.strftime("%I:%M %p")
 
         post = {
-            "curr_name": curr_name,
-            "curr_email": curr_email,
+            "post_id": 0,
+            "name": curr_name,
+            "email": curr_email,
             "assignment": assn_name,
             "description": desc,
             "class": class_name,
