@@ -1,2 +1,25 @@
 {% extends 'base.html' %}
-signup
+
+{% block body %}
+<main>
+    <form method="POST" action="/signup">
+        <label for="first_name">First Name</label>
+        <input type="text"/>
+        <label for="last_name">Last Name</label>
+        <input type="text"/>
+        <label for="email">Email</label>
+        <input type="email"/>
+        <label for="password">Password</label>
+        <input type="password"/>
+        <label for="major">Major</label>
+        <input type="text" placeholder="e.g computer science"/>
+        <label for="college">College</label>
+        <select id="college" name="college" required>
+            <option value="" disabled selected>Select your college</option>
+            {% for campus in csu_campuses %}
+                <option value="{{ campus }}">{{ campus }} </option>
+            {% endfor %}
+        </select>
+    </form>
+</main>
+{% endblock %}
