@@ -2,17 +2,17 @@
 
 {% block body %}
 <main>
-    <form method="POST" action="/signup">
+    <form method="POST" action="{{url_for('auth.signup')}}">
         <label for="first_name">First Name</label>
-        <input type="text"/>
+        <input type="text" name="first_name"/>
         <label for="last_name">Last Name</label>
-        <input type="text"/>
+        <input type="text" name="last_name"/>
         <label for="email">Email</label>
-        <input type="email"/>
+        <input type="email" name="email"/>
         <label for="password">Password</label>
-        <input type="password"/>
+        <input type="password" name="password"/>
         <label for="major">Major</label>
-        <input type="text" placeholder="e.g computer science"/>
+        <input type="text" name="major" placeholder="e.g computer science"/>
         <label for="college">College</label>
         <select id="college" name="college" required>
             <option value="" disabled selected>Select your college</option>
@@ -20,6 +20,7 @@
                 <option value="{{ campus }}">{{ campus }} </option>
             {% endfor %}
         </select>
+        <button type="submit">submit</button>
     </form>
 </main>
 {% endblock %}
