@@ -7,5 +7,4 @@ from src.database.db import get_unipal_posts
 @main_bp.route('/')
 def index():
     coll = get_unipal_posts()
-
-    return render_template('index.html', posts=coll.find({}), user=current_user)
+    return render_template('index.html', posts=coll.find({}))

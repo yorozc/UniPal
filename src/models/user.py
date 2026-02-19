@@ -8,3 +8,15 @@ class User(UserMixin):
         @property
         def is_active(self):
             return bool(self.doc.get("is_active", True))
+        
+        @property 
+        def is_anonymous(self):
+            return False
+        
+        @property 
+        def is_authenticated(self):
+            return True
+        
+        @property 
+        def email(self):
+            return self.doc.get("email")

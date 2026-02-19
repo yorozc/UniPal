@@ -21,15 +21,15 @@ def login():
                 user = User(doc)
                 login_user(user, remember=True)
                 flash(f'User found. Logging in!', category='success')
-                return render_template(url_for('main.index'))
+                return redirect(url_for('main.index'))
             else:
                 flash('Wrong password', category='error')
                 return redirect(url_for('auth.login'))
         else:
             flash('User not found!', category='error')
             return redirect(url_for('auth.login'))
-        
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
 
 @login_required
 @auth_bp.route('/logout', methods=['GET'])
