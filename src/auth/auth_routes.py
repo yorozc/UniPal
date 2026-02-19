@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, flash, url_for
 from flask_login import logout_user, login_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import auth_bp
+from src.models.user import User
 from src.database.db import get_user_collection
 from src.data.csu_campuses import CSU_CAMPUSES
 
