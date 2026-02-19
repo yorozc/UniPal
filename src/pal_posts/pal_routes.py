@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, flash
-from flask_login import current_user
+from flask import Flask, render_template, request, flash, redirect, url_for
+from flask_login import current_user, login_required
 from bson import ObjectId
 from . import pal_bp
 from src.database.db import get_unipal_posts
@@ -11,6 +11,7 @@ def post(post_id):
     post = coll.find_one({"_id": ObjectId(post_id)})
     return render_template('pal_post.html', post=post)
 
+@login_required
 # creating a pal post
 @pal_bp.route('/add_post', methods=['GET', 'POST'])
 def add_post():
@@ -33,7 +34,6 @@ def add_post():
         formatted_time = time_obj.strftime("%I:%M %p")
 
         post = {
-            "post_id": 0,
             "name": curr_name,
             "email": curr_email,
             "assignment": assn_name,
@@ -55,6 +55,16 @@ def add_post():
     return render_template('pal_form.html')
 
 # deleting a pal post
+@login_required
+@pal_bp.route('/post/<post_id>/delete_post', methods=['POST'])
+def delete_post(post_id):
+    if request.method == 'POST':
+        coll = get_unipal_posts()
+
+        delete_result = coll.find_one_and_delete({"_id": ObjectId(post_id)})
+        print(delete_result)
+
+    return redirect(url_for('main.index'))
 
 # editing a pal post
 

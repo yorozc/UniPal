@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<a href="{{ url_for('main.index') }}">Home</a>
 <main>
     <form method="POST" action="{{url_for('pal.add_post')}}">
         <label for="work_name">Assignment Name</label>

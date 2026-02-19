@@ -2,11 +2,19 @@
 
 {% block body %}
     <a href="{{ url_for('main.index') }}">Home</a>
+    {% if current_user.id == post.user_id|string %}
+        <form action="{{url_for('pal.delete_post', post_id=post._id)}}" method="POST">
+            <button type="submit">delete</button>
+        </form>
+    {% endif %}
+    
     <div class="post">
+        {{post._id}}
         {{post.name}}
         {{post.email}}
         {{post.assignment}}
         {{post.description}}
         {{post.class}}
+        {{post.user_id}}
     </div>
 {% endblock %}

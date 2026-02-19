@@ -14,7 +14,7 @@
 
     {% for post in posts %}
         <div class="pal_post">
-            <a href="{{ url_for('pal.post', post_id=post._id)}}">View Post</a>
+            <a href="{{ url_for('pal.post', post_id=post._id) }}">View Post</a>
             <p>Posts: {{ post.name }} {{post.email}}</p>
             <p>{{post.assignment}}</p>
         </div>
