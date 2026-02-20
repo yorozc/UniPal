@@ -11,6 +11,17 @@ def post(post_id):
     user_coll = get_user_collection()
     post = coll.find_one({"_id": ObjectId(post_id)})
 
+    date_str = post.get('start-date')
+    time_str = post.get('start-time')
+
+    if date_str:
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+        post["start-date"] = date_obj.strftime("%b %d, %Y")
+
+    if time_str:
+        time_obj = datetime.strptime(time_str, "%H:%M")
+        post["start-time"] = time_obj.strftime("%I:%M %p")
+
     post["_id"] = str(post["_id"])
     post["user_id"] = str(post.get("user_id", ""))
     pals_ids = post.get('pals_users', [])
