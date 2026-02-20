@@ -2,23 +2,25 @@
 
 {% block body %}
     <a href="{{ url_for('main.index') }}">Home</a>
-    {% if current_user.id == post.user_id|string %}
-        <form action="{{url_for('pal.delete_post', post_id=post._id) }}" method="POST">
-            <button type="submit">delete</button>
-        </form>
-        <a href="{{ url_for('pal.edit_post', post_id=post._id) }}"><button>edit</button></a>
-
-    {% else %}
-        {% if current_user.id in post.pals_users|string %}
-            <form action="{{ url_for('pal.unreserve', post_id=post._id|string) }}" method="POST">
-                <button type="submit">Unreserve</button>
+    {% if current_user.is_authenticated %}
+        {% if current_user.id == post.user_id|string %}
+            <form action="{{url_for('pal.delete_post', post_id=post._id) }}" method="POST">
+                <button type="submit">delete</button>
             </form>
+            <a href="{{ url_for('pal.edit_post', post_id=post._id) }}"><button>edit</button></a>
         {% else %}
-            <form action="{{url_for('pal.reserve', post_id=post._id)}}" method="POST">
-                <button type="submit">reserve</button>
-            </form>
+            {% if current_user.id in post.pals_users|string %}
+                <form action="{{ url_for('pal.unreserve', post_id=post._id|string) }}" method="POST">
+                    <button type="submit">Unreserve</button>
+                </form>
+            {% else %}
+                <form action="{{url_for('pal.reserve', post_id=post._id)}}" method="POST">
+                    <button type="submit">reserve</button>
+                </form>
+            {% endif %}
         {% endif %}
     {% endif %}
+    
     
     <div class="post">
         {{post.name}}

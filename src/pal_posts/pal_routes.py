@@ -102,6 +102,7 @@ def edit_post(post_id):
 
 # reserving a slot on the pal post
 @pal_bp.route('/post/<post_id>/reserve', methods=['POST'])
+@login_required
 def reserve(post_id):
     coll = get_unipal_posts()
 
