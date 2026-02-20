@@ -9,6 +9,7 @@ from datetime import datetime
 def post(post_id):
     coll = get_unipal_posts()
     post = coll.find_one({"_id": ObjectId(post_id)})
+
     return render_template('pal_post.html', post=post)
 
 @login_required
@@ -123,8 +124,27 @@ def reserve(post_id):
                 flash('Post not found.', category='error')
             else:
                 flash("Reserved!", category='success')
-                
+
         except Exception as e:
             flash(f'Error: {e}', category='error')
 
         return redirect(url_for('pal.post', post_id=post_id))
+    
+@pal_bp.route('/post/<post_id>/unreserve', methods=['POST'])
+@login_required
+def unreserve(post_id):
+    coll = get_unipal_posts()
+
+    result = coll.update_one(
+        {"_id": ObjectId(post_id)},
+        {"$pull": {"pals_users": ObjectId(current_user.id)}}
+    )
+
+    if result.matched_count == 0:
+        flash("Post not found.", "error")
+    elif result.modified_count == 0:
+        flash("You were not reserved for this post.", "info")
+    else:
+        flash("Reservation cancelled.", "success")
+
+    return redirect(url_for('pal.post', post_id=post_id))

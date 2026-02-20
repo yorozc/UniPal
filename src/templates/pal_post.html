@@ -9,9 +9,15 @@
         <a href="{{ url_for('pal.edit_post', post_id=post._id) }}"><button>edit</button></a>
 
     {% else %}
-        <form action="{{url_for('pal.reserve', post_id=post._id)}}" method="POST">
-            <button type="submit">reserve</button>
-        </form>
+        {% if current_user.id in post.pals_users|string %}
+            <form action="{{ url_for('pal.unreserve', post_id=post._id|string) }}" method="POST">
+                <button type="submit">Unreserve</button>
+            </form>
+        {% else %}
+            <form action="{{url_for('pal.reserve', post_id=post._id)}}" method="POST">
+                <button type="submit">reserve</button>
+            </form>
+        {% endif %}
     {% endif %}
     
     <div class="post">
@@ -21,5 +27,6 @@
         {{post.description}}
         {{post.class}}
         {{post.pals}}
+        {{post.pals_users}}
     </div>
 {% endblock %}
