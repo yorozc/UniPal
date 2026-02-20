@@ -32,7 +32,7 @@ def login():
         return render_template('login.html')
 
 @login_required
-@auth_bp.route('/logout', methods=['GET'])
+@auth_bp.route('/logout', methods=['POST'])
 def logout():
     logout_user()
     flash('Successfully logged out!', category='success')

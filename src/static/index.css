@@ -4,8 +4,100 @@
     box-sizing: border-box;
 }
 
-nav{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+/* GLOBAL */
+body {
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 70px;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}
+
+.nav-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.nav-icons a img {
+  width: 32px;
+  height: 32px;
+  filter: invert(1);
+  transition: transform .2s, opacity .2s;
+}
+
+.nav-icons a:hover img {
+  transform: scale(1.2);
+  opacity: .8;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: 90px;
+  padding: 24px;
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: flex-start;
+}
+
+/* POST CARD */
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  padding: 24px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+}
+
+.post-header h2 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.post-details p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.post-desc {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.reserve-btn {
+  background: #2a8f2a;
+  color: #fff;
 }
