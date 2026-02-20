@@ -44,9 +44,12 @@ body {
     color: #A9E573;
 }
 
-.nav-icons a:hover img {
-  transform: scale(1.2);
-  opacity: .8;
+.nav-icons a:hover p{
+  color: #2a8f2a;
+}
+
+.nav-icons a:active p{
+  color: lightblue;
 }
 
 /* MAIN CONTENT */
@@ -84,7 +87,13 @@ body {
   display: flex;
   flex-direction: column;
   align-self: stretch;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   
+}
+
+.post-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .post-header h2 {
