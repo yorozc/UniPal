@@ -7,12 +7,28 @@
   <aside class="sidebar">
     <nav class="nav-icons">
       <a href="{{ url_for('main.index') }}" title="Home">
-        <img src="{{ url_for('static', filename='icons/home.svg') }}" alt="Home">
+        <p>Home</p>
       </a>
 
+      {% if current_user.is_authenticated %}
       <a href="{{ url_for('pal.add_post') }}" title="New">
-        <img src="{{ url_for('static', filename='icons/plus.svg') }}" alt="New">
+        <p>Create</p>
       </a>
+      <a href="#">
+        <p>Reserves</p>
+      </a>
+      <a href="{{ url_for('auth.logout') }}" title="Logout">
+        <p>Logout</p>
+      </a>
+      {% else %}
+      <a href="{{ url_for('auth.login') }}" title="Login">
+        <p>Login</p>
+      </a>
+      <a href="{{ url_for('auth.signup') }}" title="Signup">
+        <p>Signup</p>
+      </a>
+
+      {% endif %}
 
     </nav>
   </aside>
@@ -20,30 +36,32 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
     {% for post in posts %}
+    <a href="{{ url_for('pal.post', post_id=post._id)}}" class="post-link">
     <article class="post-card">
       <header class="post-header">
         <h2>{{ post.assignment }}</h2>
-        <p>Class: {{ post.class }}</p>
+        <p><strong>Class:</strong> {{ post.class }}</p>
       </header>
 
       <div class="post-details">
-        <p><strong>Posted by:</strong> {{ post.name }} ({{ post.email }})</p>
+        <p><strong>Posted by:</strong> {{ post.name }}</p>
+        <p><strong>Email:</strong> {{ post.email }}</p>
         <p><strong>Date:</strong> {{ post["start-date"] }} at {{ post["start-time"] }}</p>
         <p><strong>Needed:</strong> {{ post.pals }} pals</p>
       </div>
 
       <div class="post-desc">
+        <h4>Description:</h4>
         <p>{{ post.description }}</p>
       </div>
 
       <footer class="post-actions">
         {% if current_user.is_authenticated %}
-          <form action="{{ url_for('pal.reserve', post_id=post._id|string) }}" method="POST">
-            <button class="btn reserve-btn" type="submit">Reserve</button>
-          </form>
+          
         {% endif %}
       </footer>
     </article>
+    </a>
     {% endfor %}
     </main>
 

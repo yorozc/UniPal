@@ -18,7 +18,7 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-  width: 70px;
+  width: 150px;
   background: #111;
   display: flex;
   justify-content: center;
@@ -35,11 +35,13 @@ body {
   gap: 24px;
 }
 
-.nav-icons a img {
-  width: 32px;
-  height: 32px;
-  filter: invert(1);
-  transition: transform .2s, opacity .2s;
+.nav-icons a{
+    text-decoration: none;
+}
+
+.nav-icons a p{
+    font-size: 1.2rem;
+    color: #A9E573;
 }
 
 .nav-icons a:hover img {
@@ -49,13 +51,26 @@ body {
 
 /* MAIN CONTENT */
 .main-content {
-  margin-left: 90px;
+  margin-left: 150px;
   padding: 24px;
   gap: 2rem;
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   align-content: flex-start;
+}
+
+.post-link{
+    text-decoration: none;
+    color: black;
+}
+
+.post-link:hover{
+    opacity: 80%;
+}
+
+.post-link:visited{
+    color: none;
 }
 
 /* POST CARD */
@@ -70,6 +85,7 @@ body {
   overflow: hidden;
   
 }
+
 
 .post-header h2 {
   margin: 0 0 8px;
