@@ -29,11 +29,6 @@ def add_post():
         
         coll = get_unipal_posts()
 
-        date_obj = datetime.strptime(date, "%Y-%m-%d")
-        formatted_date = date_obj.strftime("%m-%d-%Y")
-        time_obj = datetime.strptime(time, "%H:%M")
-        formatted_time = time_obj.strftime("%I:%M %p")
-
         post = {
             "name": curr_name,
             "email": curr_email,
@@ -51,8 +46,6 @@ def add_post():
             flash('Posted!', category='success')
         except Exception as e:
             flash(f'Error: {e}', category='error')
-
-        print(assn_name, desc, class_name, formatted_date, formatted_time, pals, user_id)
 
     return render_template('pal_form.html')
 

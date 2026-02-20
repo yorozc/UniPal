@@ -1,40 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="layout">
-  
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar">
-    <nav class="nav-icons">
-      <a href="{{ url_for('main.index') }}" title="Home">
-        <p>Home</p>
-      </a>
-
-      {% if current_user.is_authenticated %}
-      <a href="{{ url_for('pal.add_post') }}" title="New">
-        <p>Create</p>
-      </a>
-      <a href="#">
-        <p>Reserves</p>
-      </a>
-      <a href="{{ url_for('auth.logout') }}" title="Logout">
-        <p>Logout</p>
-      </a>
-      {% else %}
-      <a href="{{ url_for('auth.login') }}" title="Login">
-        <p>Login</p>
-      </a>
-      <a href="{{ url_for('auth.signup') }}" title="Signup">
-        <p>Signup</p>
-      </a>
-
-      {% endif %}
-
-    </nav>
-  </aside>
-
   <!-- MAIN CONTENT -->
-  <main class="main-content">
     {% for post in posts %}
     <a href="{{ url_for('pal.post', post_id=post._id)}}" class="post-link">
     <article class="post-card">
@@ -46,7 +13,7 @@
       <div class="post-details">
         <p><strong>Posted by:</strong> {{ post.name }}</p>
         <p><strong>Email:</strong> {{ post.email }}</p>
-        <p><strong>Date:</strong> {{ post["start-date"] }} at {{ post["start-time"] }}</p>
+        <p><strong>Date:</strong> {{ post['start-date'] }} at {{ post['start-time']}}</p>
         <p><strong>Needed:</strong> {{ post.pals }} pals</p>
       </div>
 
@@ -63,9 +30,6 @@
     </article>
     </a>
     {% endfor %}
-    </main>
-
-</div>
 {% endblock %}
 
 
