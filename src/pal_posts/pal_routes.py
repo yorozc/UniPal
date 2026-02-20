@@ -42,7 +42,8 @@ def add_post():
             "start-date": date,
             "start-time": time,
             "pals": pals,
-            "user_id": user_id
+            "user_id": user_id,
+            "pals_users": []
         }
         try:
             coll.insert_one(post)
@@ -106,3 +107,18 @@ def edit_post(post_id):
                            date=date, time=time, pals=pals, post=post)
 
 # reserving a slot on the pal post
+@pal_bp.route('/post/<post_id>/reserve', methods=['POST'])
+def reserve(post_id):
+    if request.method == 'POST':
+        coll = get_unipal_posts()
+
+        try:
+            coll.update_one(
+                {"_id": ObjectId(post_id)},
+                {"$addToSet": {"pals_users": ObjectId(current_user.id)}}
+            )
+            flash("Reserved!", category='success')
+        except Exception as e:
+            flash(f'Error: {e}', category='error')
+
+        return redirect(url_for('pal.post', post_id=post_id))
