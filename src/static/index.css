@@ -1,3 +1,13 @@
+:root {
+  --main-text-color: #;
+  --header-color: #;
+  --main-bg-color: #EEEEEE;
+  --nav-bar-color: #;
+  --link-color: #;
+  --hover-link-color: #;
+  --post-color: #;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -8,6 +18,7 @@
 body {
   font-family: Arial, sans-serif;
   color: #222;
+  background-color: var(--main-bg-color);
 }
 
 /* LAYOUT */
@@ -19,7 +30,7 @@ body {
 /* SIDEBAR */
 .sidebar {
   width: 150px;
-  background: #111;
+  background: #040D12;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -80,6 +91,7 @@ body {
 /* POST CARD */
 .post-card {
   background: #fff;
+  color: black;
   border-radius: 12px;
   box-shadow: 0 4px 18px rgba(0,0,0,.08);
   padding: 24px;
@@ -111,7 +123,7 @@ body {
 .post-details p {
   margin: 6px 0;
   font-size: 15px;
-  color: #444;
+  color: black;
 }
 
 .post-desc {
@@ -196,8 +208,10 @@ select, input{
 }
 
 /* pal post */
-/* pal_post styles - simple & clean */
-.pal-page { padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
+
+.pal-page { 
+  padding: 28px 24px; max-width: 1100px; margin: 0 auto; 
+}
 
 /* header */
 .pal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px; }
@@ -206,10 +220,20 @@ select, input{
 .pal-header .dot { opacity:.5; }
 
 /* overall body */
-.pal-body { display:flex; flex-direction:column; gap:18px; }
+.pal-body { 
+  display:flex;
+  flex-direction:column; 
+  gap:18px; 
+  
+}
 
 /* main card */
-.pal-card { background:#fff; border-radius:12px; box-shadow:0 8px 28px rgba(18,18,18,.06); padding:20px; display:block; }
+.pal-card { 
+  border-radius:12px; 
+  box-shadow:0 8px 28px rgba(18,18,18,.06); 
+  padding:20px; display:block; 
+  background-color: #fff;
+}
 
 /* header of card */
 .pal-card-head .title { margin:0 0 6px; font-size:22px; color:#111; }
