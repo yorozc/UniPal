@@ -55,9 +55,14 @@
                     <button class="btn btn-ghost" type="submit">Unreserve</button>
                   </form>
                 {% else %}
-                  <form action="{{ url_for('pal.reserve', post_id=post._id|string) }}" method="POST">
-                    <button class="btn btn-primary" type="submit">Reserve</button>
-                  </form>
+                {% if post.remaining <= 0 %}
+                    <button disabled class="btn btn-primary">Full</button>
+                {% else %}
+                    <form action="{{ url_for('pal.reserve', post_id=post._id|string) }}" method="POST">
+                        <button class="btn btn-primary" type="submit">Reserve</button>
+                    </form>
+                {% endif %}
+                  
                 {% endif %}
               {% endif %}
             {% else %}
