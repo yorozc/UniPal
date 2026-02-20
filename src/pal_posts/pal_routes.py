@@ -2,15 +2,32 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from bson import ObjectId
 from . import pal_bp
-from src.database.db import get_unipal_posts
+from src.database.db import get_unipal_posts, get_user_collection
 from datetime import datetime
 
 @pal_bp.route("/post/<post_id>", methods=['GET'])
 def post(post_id):
     coll = get_unipal_posts()
+    user_coll = get_user_collection()
     post = coll.find_one({"_id": ObjectId(post_id)})
 
-    return render_template('pal_post.html', post=post)
+    post["_id"] = str(post["_id"])
+    post["user_id"] = str(post.get("user_id", ""))
+    pals_ids = post.get('pals_users', [])
+    
+
+    reserved_users = []
+    if pals_ids:
+        reserved_users = list(user_coll.find(
+            {'_id': {'$in': pals_ids}},
+            {'first_name': 1, 'last_name': 1, 'email': 1}
+        ))
+
+        for user in reserved_users:
+            user["_id"] = str(user["_id"])
+    
+
+    return render_template('pal_post.html', post=post, reserved_users=reserved_users)
 
 @login_required
 # creating a pal post

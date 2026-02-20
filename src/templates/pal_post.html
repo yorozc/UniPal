@@ -1,34 +1,90 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <a href="{{ url_for('main.index') }}">Home</a>
-    {% if current_user.is_authenticated %}
-        {% if current_user.id == post.user_id|string %}
-            <form action="{{url_for('pal.delete_post', post_id=post._id) }}" method="POST">
-                <button type="submit">delete</button>
-            </form>
-            <a href="{{ url_for('pal.edit_post', post_id=post._id) }}"><button>edit</button></a>
-        {% else %}
-            {% if current_user.id in post.pals_users|string %}
-                <form action="{{ url_for('pal.unreserve', post_id=post._id|string) }}" method="POST">
-                    <button type="submit">Unreserve</button>
-                </form>
-            {% else %}
-                <form action="{{url_for('pal.reserve', post_id=post._id)}}" method="POST">
-                    <button type="submit">reserve</button>
-                </form>
-            {% endif %}
-        {% endif %}
-    {% endif %}
-    
-    
-    <div class="post">
-        {{post.name}}
-        {{post.email}}
-        {{post.assignment}}
-        {{post.description}}
-        {{post.class}}
-        {{post.pals}}
-        {{post.pals_users}}
+{# Normalize / safe defaults inside template #}
+{% set owner_id = (post.user_id|string) if post.user_id is defined else '' %}
+{% set pals = post.pals_users if (post.pals_users is defined) else [] %}
+
+<div class="pal-page">
+
+  <!-- Left: basic navigation -->
+  <div class="pal-header">
+    <a class="back" href="{{ url_for('main.index') }}">&larr; Back</a>
+    <div class="meta-inline">
+      <span class="posted-by">Posted by <strong>{{ post.name or 'Unknown' }}</strong></span>
+      <span class="dot">•</span>
+      <span class="email">{{ post.email or '' }}</span>
     </div>
+  </div>
+
+  <div class="pal-body">
+
+    <!-- Primary card -->
+    <article class="pal-card">
+      <header class="pal-card-head">
+        <h1 class="title">{{ post.assignment or 'Untitled' }}</h1>
+        <p class="subtitle">{{ post.class or '' }}
+          {% if post["start-date"] or post["start-time"] %}
+            • {{ post["start-date"]|default('') }} {{ post["start-time"]|default('') }}
+          {% endif %}
+        </p>
+      </header>
+
+      <section class="pal-card-main">
+        <div class="left-col">
+          <div class="label">Description</div>
+          <p class="description">{{ post.description or 'No description provided.' }}</p>
+
+          <div class="meta-grid">
+            <div><span class="meta-label">Needed</span><div class="meta-value">{{ post.pals or 0 }}</div></div>
+            <div><span class="meta-label">Reserved</span><div class="meta-value">{{ pals|length }}</div></div>
+          </div>
+        </div>
+
+        <aside class="right-col">
+          <div class="actions">
+            {% if current_user.is_authenticated %}
+              {% if current_user.id == owner_id %}
+                <form action="{{ url_for('pal.delete_post', post_id=post._id|string) }}" method="POST" style="margin-bottom:8px;">
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+                <a class="btn btn-outline" href="{{ url_for('pal.edit_post', post_id=post._id|string) }}">Edit</a>
+              {% else %}
+                {% if current_user.id in (pals | map('string') | list) %}
+                  <form action="{{ url_for('pal.unreserve', post_id=post._id|string) }}" method="POST">
+                    <button class="btn btn-ghost" type="submit">Unreserve</button>
+                  </form>
+                {% else %}
+                  <form action="{{ url_for('pal.reserve', post_id=post._id|string) }}" method="POST">
+                    <button class="btn btn-primary" type="submit">Reserve</button>
+                  </form>
+                {% endif %}
+              {% endif %}
+            {% else %}
+              <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Log in to reserve</a>
+            {% endif %}
+          </div>
+        </aside>
+      </section>
+    </article>
+
+    <!-- Optional: small reserve list -->
+    <section class="reserved-list">
+      <h3>Reserved Users</h3>
+      {% if reserved_users %}
+        <ul>
+          {% for user in reserved_users %}
+            <li class="reserved-user">
+                <div class="user-name">{{user.first_name}} {{user.last_name}}</div>
+                <div class="user-email">{{user.email}}</div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No reservations yet.</p>
+      {% endif %}
+    </section>
+
+  </div>
+</div>
 {% endblock %}
