@@ -113,11 +113,17 @@ def reserve(post_id):
         coll = get_unipal_posts()
 
         try:
-            coll.update_one(
+            reserve_check = coll.update_one(
                 {"_id": ObjectId(post_id)},
                 {"$addToSet": {"pals_users": ObjectId(current_user.id)}}
             )
-            flash("Reserved!", category='success')
+            if reserve_check.modified_count == 0:
+                flash('You already reserved a slot.', category='error')
+            elif reserve_check.matched_count == 0:
+                flash('Post not found.', category='error')
+            else:
+                flash("Reserved!", category='success')
+                
         except Exception as e:
             flash(f'Error: {e}', category='error')
 
