@@ -72,7 +72,28 @@ def delete_post(post_id):
 def edit_post(post_id):
     coll = get_unipal_posts()
     if request.method == 'POST':
-        pass
+        upd_assignment = request.form['assignment']
+        upd_desc = request.form['description']
+        upd_class = request.form['class']
+        upd_date = request.form['date']
+        upd_time = request.form['time']
+        upd_pals = request.form['pals']
+        
+        data = {
+            "assignment": upd_assignment,
+            "description": upd_desc,
+            "class": upd_class,
+            "start-date": upd_date,
+            "start-time": upd_time,
+            "pals": upd_pals
+        }
+
+        coll.update_one(
+            {"_id": ObjectId(post_id)},
+            {"$set": data}
+        )
+        return redirect(url_for('main.index'))
+        
         
     post = coll.find_one({"_id": ObjectId(post_id)})
     assignment = post['assignment']
