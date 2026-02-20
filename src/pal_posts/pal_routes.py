@@ -171,12 +171,6 @@ def unreserve(post_id):
 
     return redirect(url_for('pal.post', post_id=post_id))
 
-@pal_bp.route('/reserves', methods=['GET'])
-@login_required
-def reserves_page():
-    from flask_login import login_required, current_user
-from bson import ObjectId
-
 @pal_bp.route("/reserved", methods=["GET"])
 @login_required
 def reserved():

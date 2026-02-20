@@ -14,7 +14,14 @@
         <p><strong>Posted by:</strong> {{ post.name }}</p>
         <p><strong>Email:</strong> {{ post.email }}</p>
         <p><strong>Meet Date:</strong> {{ post['start-date'] }} at {{ post['start-time']}}</p>
-        <p><strong>Needed:</strong> {{ post.pals }} pals</p>
+        {% if post.remaining|int == 0 %}
+            <p><strong>Needed:</strong> FULL </p>
+
+        {% else %}
+            <p><strong>Needed:</strong> {{ post.pals }} pals</p>
+        {% endif %}
+
+        
       </div>
 
       <div class="post-desc">
