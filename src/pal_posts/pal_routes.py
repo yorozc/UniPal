@@ -67,5 +67,21 @@ def delete_post(post_id):
     return redirect(url_for('main.index'))
 
 # editing a pal post
+@login_required
+@pal_bp.route('/post/<post_id>/edit_post', methods=['GET', 'POST'])
+def edit_post(post_id):
+    coll = get_unipal_posts()
+    if request.method == 'POST':
+        pass
+        
+    post = coll.find_one({"_id": ObjectId(post_id)})
+    assignment = post['assignment']
+    desc = post['description']
+    class_name = post['class']
+    date = post['start-date']
+    time = post['start-time']
+    pals = post['pals']
+    return render_template('pal_edit_post.html', assignment=assignment, desc=desc, class_name=class_name, 
+                           date=date, time=time, pals=pals, post=post)
 
 # reserving a slot on the pal post
