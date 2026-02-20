@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <main>
+    <div class="form-container">
+        <h2 class="form-header">Edit Post</h2>
         <form method="POST" action="{{ url_for('pal.edit_post', post_id=post._id)}}">
-            <label for="assignment">Assignment</label>
-            <input type="text" value="{{assignment}}" name="assignment" required/>
-            <label for="description">Description</label>
-            <textarea name="description">desc</textarea>
-            <label for="class">Class</label>
-            <input type="text" value="{{class_name}}" name="class" required/>
-            <label for="date">Date</label>
-            <input type="date" value="{{date}}" name="date" required/>
-            <label for="time">Time</label>
-            <input type="time" value="{{time}}" name="time" required/>
-            <label for="pals">Pals</label>
-            <input type="number" value="{{pals}}" name="pals" required/>
-            <button type="submit">submit</button>
+            <fieldset>
+                <label for="assignment">Assignment</label>
+                <input type="text" value="{{assignment}}" name="assignment" required/>
+                <label for="description">Description</label>
+                <textarea name="description">desc</textarea>
+                <label for="class">Class</label>
+                <input type="text" value="{{class_name}}" name="class" required/>
+                <label for="date">Date</label>
+                <input type="date" value="{{date}}" name="date" required/>
+                <label for="time">Time</label>
+                <input type="time" value="{{time}}" name="time" required/>
+                <label for="pals">Pals</label>
+                <input type="number" value="{{pals}}" name="pals" required/>
+                <button type="submit" class="form-btn">submit</button>
+            </fieldset>
         </form>
-    </main>
+    </div>
+        
+    
 {% endblock %}
