@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<main class="main-content">
+    <h1 style="width:100%; margin-bottom: 12px;">Your Reserved Posts</h1>
+
+    {% if posts %}
+      {% for post in posts %}
+        <a href="{{ url_for('pal.post', post_id=post._id) }}" class="post-link">
+          <article class="post-card">
+            <header class="post-header">
+              <h2>{{ post.assignment }}</h2>
+              <p><strong>Class:</strong> {{ post.class }}</p>
+            </header>
+
+            <div class="post-details">
+              <p><strong>Posted by:</strong> {{ post.name }}</p>
+              <p><strong>Meet Date:</strong> {{ post["start-date"] }} at {{ post["start-time"] }}</p>
+              <p><strong>Needed:</strong> {{ post.pals }} pals</p>
+            </div>
+
+            <div class="post-desc">
+              <h4>Description:</h4>
+              <p class="clamped">{{ post.description }}</p>
+              <button class="read-more-btn" type="button">Read more</button>
+            </div>
+
+            <footer class="post-actions">
+              <form action="{{ url_for('pal.unreserve', post_id=post._id) }}" method="POST">
+                <button class="btn btn-danger" type="submit">Unreserve</button>
+              </form>
+            </footer>
+          </article>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p>You haven’t reserved any posts yet.</p>
+    {% endif %}
+  </main>
+</div>
+
+{% endblock %}

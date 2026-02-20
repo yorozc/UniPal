@@ -170,3 +170,28 @@ def unreserve(post_id):
         flash("Reservation cancelled.", "success")
 
     return redirect(url_for('pal.post', post_id=post_id))
+
+@pal_bp.route('/reserves', methods=['GET'])
+@login_required
+def reserves_page():
+    from flask_login import login_required, current_user
+from bson import ObjectId
+
+@pal_bp.route("/reserved", methods=["GET"])
+@login_required
+def reserved():
+    coll = get_unipal_posts()
+
+    user_oid = ObjectId(current_user.id)
+
+    # Find all posts reserved by this user
+    posts = list(coll.find({"pals_users": user_oid}).sort("_id", -1))
+
+    # Convert ids to strings for templates/URLs
+    for p in posts:
+        p["_id"] = str(p["_id"])
+        p["user_id"] = str(p.get("user_id", ""))
+        p["pals_users"] = [str(x) for x in p.get("pals_users", [])]
+
+    return render_template("reserved.html", posts=posts)
+
