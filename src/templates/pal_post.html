@@ -36,7 +36,7 @@
           <p class="description">{{ post.description or 'No description provided.' }}</p>
 
           <div class="meta-grid">
-            <div><span class="meta-label">Needed</span><div class="meta-value">{{ post.pals or 0 }}</div></div>
+            <div><span class="meta-label">Needed</span><div class="meta-value">{{ post.remaining or 0 }}</div></div>
             <div><span class="meta-label">Reserved</span><div class="meta-value">{{ pals|length }}</div></div>
           </div>
         </div>

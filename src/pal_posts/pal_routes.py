@@ -37,6 +37,10 @@ def post(post_id):
         for user in reserved_users:
             user["_id"] = str(user["_id"])
     
+    pals_needed = post.get("pals", 0)
+    reserved_count = len(post.get("pals_users", []))
+
+    post["remaining"] = int(pals_needed) - reserved_count
 
     return render_template('pal_post.html', post=post, reserved_users=reserved_users)
 
