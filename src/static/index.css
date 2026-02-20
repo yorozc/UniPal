@@ -80,18 +80,23 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 18px rgba(0,0,0,.08);
   padding: 24px;
-  max-width: 350px;
+  width: 400px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  align-self: stretch;
   
 }
-
 
 .post-header h2 {
   margin: 0 0 8px;
   font-size: 26px;
   border-bottom: 1px solid #444;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* number of visible lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;    
 }
 
 .post-details p {
@@ -104,6 +109,12 @@ body {
   margin-top: 18px;
   font-size: 16px;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* number of visible lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;    
 }
 
 /* BUTTONS */

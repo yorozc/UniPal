@@ -36,7 +36,7 @@ def login():
 def logout():
     logout_user()
     flash('Successfully logged out!', category='success')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('auth.login'))
 
 # create account
 @auth_bp.route('/signup', methods=['GET', 'POST'])

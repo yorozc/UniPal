@@ -76,6 +76,7 @@ def add_post():
         try:
             coll.insert_one(post)
             flash('Posted!', category='success')
+            return redirect(url_for('main.index'))
         except Exception as e:
             flash(f'Error: {e}', category='error')
 
