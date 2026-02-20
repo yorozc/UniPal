@@ -110,26 +110,21 @@ def edit_post(post_id):
 # reserving a slot on the pal post
 @pal_bp.route('/post/<post_id>/reserve', methods=['POST'])
 def reserve(post_id):
-    if request.method == 'POST':
-        coll = get_unipal_posts()
+    coll = get_unipal_posts()
 
-        try:
-            reserve_check = coll.update_one(
-                {"_id": ObjectId(post_id)},
-                {"$addToSet": {"pals_users": ObjectId(current_user.id)}}
-            )
-            if reserve_check.modified_count == 0:
-                flash('You already reserved a slot.', category='error')
-            elif reserve_check.matched_count == 0:
-                flash('Post not found.', category='error')
-            else:
-                flash("Reserved!", category='success')
+    reserve_check = coll.update_one(
+        {"_id": ObjectId(post_id)},
+        {"$addToSet": {"pals_users": ObjectId(current_user.id)}}
+    )
+    if reserve_check.modified_count == 0:
+        flash('You already reserved a slot.', category='error')
+    elif reserve_check.matched_count == 0:
+        flash('Post not found.', category='error')
+    else:
+        flash("Reserved!", category='success')
 
-        except Exception as e:
-            flash(f'Error: {e}', category='error')
+    return redirect(url_for('pal.post', post_id=post_id))
 
-        return redirect(url_for('pal.post', post_id=post_id))
-    
 @pal_bp.route('/post/<post_id>/unreserve', methods=['POST'])
 @login_required
 def unreserve(post_id):
