@@ -28,9 +28,5 @@ try:
     user_coll = db[USER_COLL]
     palpost_coll = db[PALPOST_COLL]
 
-    def get_palpost_coll():
-        return palpost_coll
-
-
 except Exception as e:
     print('Unable to make connectino to DB', e)

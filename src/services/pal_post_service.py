@@ -11,13 +11,11 @@ class PalPostService:
     def return_all_posts() -> list[PostWithId]:
         posts = []
         for post in palpost_coll.find():
-            post["id"] = str(post["_id"])
+            post["id"] = str(post["_id"]) # post specific id
             del post["_id"]
-            post["user_id"] = str(post["user_id"])
-            post["pals_users"] = [str(user) for user in post["pals_users"]]
+            post["user_id"] = str(post["user_id"]) # post's author
+            post["pals_users"] = [str(user) for user in post["pals_users"]] # users who reserve the post
             posts.append(PostWithId(**post))
-            
-
         return posts
 
         
