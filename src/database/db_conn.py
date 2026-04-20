@@ -3,7 +3,11 @@ from pymongo.errors import ConfigurationError
 import certifi
 import os
 
+
 try: 
+    DB_NAME = os.getenv("DB")
+    USER_COLL = os.getenv("USER_COLLECTION")
+    PALPOST_COLL = os.getenv("POST_COLLECTION")
     def _uri():
         uri = os.getenv("MONGODB_URI")
         if not uri:
@@ -18,16 +22,10 @@ try:
         print('Pinged your deployment. Successfull connection to MongoDB!')
     except Exception as e:
         print(e)
-
-    def get_db():
-        return get_client()[os.getenv("DB")]
     
-    def get_user_collection():
-        return get_db()[os.getenv("USER_COLLECTION")]
+    db = get_client()[DB_NAME]
+    user_coll = db[USER_COLL]
+    palpost_coll = db[PALPOST_COLL]
     
-    def get_unipal_posts():
-        return get_db()[os.getenv("POST_COLLECTION")]
-
-
 except Exception as e:
     print('Unable to make connectino to DB')
