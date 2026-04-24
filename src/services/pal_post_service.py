@@ -1,5 +1,5 @@
 from database.db_conn import palpost_coll
-from models.pal_post import Post, PostWithId
+from models.pal_post import Post, PostWithId, PostUpdate
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import HTTPException
@@ -52,6 +52,9 @@ class PalPostService:
             return post_response
         except result == None:
             raise HTTPException(status_code=422, detail="Post was not added.")
+        
+    def edit_post(post_id: str, post: PostUpdate) -> PostWithId:
+        pass
 
         
  
