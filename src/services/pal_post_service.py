@@ -34,3 +34,16 @@ class PalPostService:
         post_response["pals_users"] = [str(x) for x in post_response.get("pals_users", [])]
         post_response["user_id"] = str(post_response["user_id"])
         return PostWithId(**post_response)
+    
+    def delete_post_by_ID(post_id: str):
+        try: 
+            post_response = palpost_coll.delete_one({"_id": ObjectId(post_id)})
+        except InvalidId:
+            raise HTTPException(status_code=422, detail="Not a valid Id")
+        if post_response.deleted_count == 0 or post_response is None:
+            raise HTTPException(status_code=404, detail="Post not found")
+        if post_response.deleted_count == 1:
+            return f"Deleted {post_response.acknowledged}"
+
+        
+ 
