@@ -8,3 +8,8 @@ palpost_api = APIRouter()
 async def all_posts() -> list[PostWithId]:
     posts = PalPostService.return_all_posts()
     return posts
+
+@palpost_api.get("/{post_id}")
+async def get_post(post_id: str) -> PostWithId:
+    return PalPostService.get_post_by_ID(post_id)
+    
