@@ -44,6 +44,14 @@ class PalPostService:
             raise HTTPException(status_code=404, detail="Post not found")
         if post_response.deleted_count == 1:
             return f"Deleted {post_response.acknowledged}"
+    
+    def create_post(post: Post) -> PostWithId:
+        try:
+            result = palpost_coll.insert_one(post.model_dump(exclude_none=True))
+            post_response = PostWithId(id=str(result.inserted_id), **post.model_dump())
+            return post_response
+        except result == None:
+            raise HTTPException(status_code=422, detail="Post was not added.")
 
         
  

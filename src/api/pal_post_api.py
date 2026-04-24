@@ -16,4 +16,8 @@ async def get_post(post_id: str) -> PostWithId:
 @palpost_api.delete("/{post_id}")
 async def delete_post(post_id: str):
     return PalPostService.delete_post_by_ID(post_id)
+
+@palpost_api.post("")
+async def add_post(post: Post) -> PostWithId:
+    return PalPostService.create_post(post)
     
